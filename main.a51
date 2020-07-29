@@ -1,0 +1,176 @@
+KEY1 EQU P1.0
+KEY2 EQU P1.1
+KEY3 EQU P1.2
+KEY4 EQU P1.3
+	ORG 0000H	
+	AJMP MAIN
+    ORG 000BH
+	AJMP TIMER1
+	ORG 01BH
+	AJMP TIMER2
+MAIN:
+	MOV 30H,#1
+	MOV TMOD,#11H
+	MOV 31H,#20
+	MOV R2,#5
+	MOV R3,#5
+	MOV TH0,#03CH
+	MOV TL0,#0B0H
+	MOV TH1,#0D8H
+	MOV TL1,#0F0H
+	MOV IE,#8AH
+	SETB TR0
+	SETB TR1
+    ACALL DISPLAY
+	SJMP $-2
+TIMER1:
+	  MOV TH0,#03CH
+	  MOV TL0,#0B0H
+	  DJNZ R3,T001
+	  CPL F0
+	  MOV R3,#5
+	  T001:
+	  DJNZ 31H,T0_EX
+	  MOV 31H,#20
+	  INC 26H  
+	  MOV A,26H
+	  CJNE A,#60,T0_EX
+	  MOV 26H,#0 
+          INC 27H
+	  MOV A,27H
+	  CJNE A,#60,T0_EX
+	  MOV 27H,#0
+	  INC 28H
+	  MOV A,28H
+	  CJNE A,#24,T0_EX
+	  MOV 28H,#0
+ T0_EX: RETI
+ TIMER2:
+		MOV TH1,#0D8H
+		MOV TL1,#0F0H
+		DJNZ R2,EX
+		MOV R2,#5
+		ACALL KEYPRESS
+		EX:
+		  RETI
+		KEYPRESS:
+				JNB KEY1,K1
+				JNB KEY2,K2
+				JNB KEY3,K3
+				JNB KEY4,K4
+				AJMP OUT
+				K1:
+					MOV R2,#20
+					INC 30H
+					MOV A,30H
+					CJNE A,#4,OUT
+					MOV 30H,#1
+					AJMP OUT
+					K2: MOV R3,#5
+						CLR F0
+						MOV R2,#20
+						MOV A,30H
+						CLR C
+						CJNE A,#2,SK1
+						INC 28H
+						MOV A,28H
+						CJNE A,#24,OUT
+						MOV 28H,#0
+						SJMP OUT
+						SK1:
+							JC OUT
+							INC 27H
+							MOV A,27H
+							CJNE A,#60,OUT
+							MOV 27H,#0
+							SJMP OUT
+					K3: MOV R3,#20
+					    CLR F0
+						MOV R2,#20
+						MOV A,30H
+						CLR C
+						CJNE A,#2,SK2
+						DEC 28H
+						MOV A,28H
+						CJNE A,#0FFH,OUT
+						MOV 28H,#23
+						AJMP OUT
+						SK2:
+							JC OUT
+							DEC 27H
+							MOV A,27H
+							CJNE A,#0FFH,OUT
+							MOV 27H,#59
+							SJMP OUT 
+					K4: 
+
+							OUT:
+								RET			
+DISPLAY: 
+	    MOV A,26H
+	    MOV B,#10
+	    DIV AB
+	    MOV 40H,B  
+	    MOV 41H,A  
+		MOV A,30H
+		JNB ACC.1,SK3
+		JNB ACC.0,SK3
+		JNB F0,SK3
+		MOV 43H,#10
+		MOV 44H,#10
+		AJMP SK4
+		SK3:
+	    MOV A,27H
+	    MOV B,#10
+	    DIV AB
+	    MOV 43H,B  
+	    MOV 44H,A  
+		MOV A,30H
+		JNB ACC.1,SK4
+		JB ACC.0,SK4
+		JNB F0,SK4
+		MOV 46H,#10
+		MOV 47H,#10
+		AJMP SK5
+		SK4:
+	    MOV A,28H
+	    MOV B,#10
+	    DIV AB
+	    MOV 46H,B  
+	    MOV 47H,A 	
+		MOV 42H,#11
+		MOV 45H,#11
+		SK5:
+		MOV R1,0FFH	
+		MOV P2,R1
+		MOV R4,#8
+		MOV R0,#40H		
+   LOOP:MOV A,@R0
+		ACALL DSP
+		MOV P0,A
+		ACALL WXM
+		INC R0
+		DJNZ R4,LOOP
+         RET
+DELAY: 
+     MOV R7,#2
+ D1: MOV R6,#40
+	 DJNZ R6,$
+	 DJNZ R7,D1
+	 RET
+WXM:
+    MOV P2,R1
+    ACALL DELAY
+	DEC R1
+	MOV P0,#00H
+	MOV P2,R1
+	RET
+DSP: 
+   MOV DPTR,#TAB
+   MOVC A,@A+DPTR
+    RET
+TAB:
+	DB 3FH,06H,5BH,4FH,66H
+	DB 6DH,7DH,07H,7FH,6FH
+	DB 00H,40H
+		END
