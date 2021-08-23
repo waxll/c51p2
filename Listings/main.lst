@@ -1,191 +1,196 @@
-A51 MACRO ASSEMBLER  MAIN                                                                 07/06/2020 02:22:01 PAGE     1
+A51 MACRO ASSEMBLER  MAIN                                                                 08/23/2021 23:05:53 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
 OBJECT MODULE PLACED IN .\Objects\main.obj
-ASSEMBLER INVOKED BY: D:\Keil C51\C51\BIN\A51.EXE main.a51 SET(SMALL) DEBUG PRINT(.\Listings\main.lst) OBJECT(.\Objects\
-                      main.obj) EP
+ASSEMBLER INVOKED BY: D:\Software\Keil\C51\BIN\A51.EXE main.a51 SET(SMALL) DEBUG PRINT(.\Listings\main.lst) OBJECT(.\Obj
+                      ects\main.obj) EP
 
 LOC  OBJ            LINE     SOURCE
 
   0090                 1     KEY1 EQU P1.0
   0091                 2     KEY2 EQU P1.1
   0092                 3     KEY3 EQU P1.2
-0000                   4             ORG 0000H       
-0000 011D              5             AJMP MAIN
-000B                   6         ORG 000BH
-000B 0141              7             AJMP TIMER1
-001B                   8             ORG 01BH
-001B 0172              9             AJMP TIMER2
-001D                  10     MAIN:
-001D 753001           11             MOV 30H,#1
-0020 758911           12             MOV TMOD,#11H
-0023 753114           13             MOV 31H,#20
-0026 7A05             14             MOV R2,#5
-0028 7B05             15             MOV R3,#5
-002A 758C3C           16             MOV TH0,#03CH
-002D 758AB0           17             MOV TL0,#0B0H
-0030 758DD8           18             MOV TH1,#0D8H
-0033 758BF0           19             MOV TL1,#0F0H
-0036 75A88A           20             MOV IE,#8AH
-0039 D28C             21             SETB TR0
-003B D28E             22             SETB TR1
-003D 11E3             23         ACALL DISPLAY
-003F 80FC             24             SJMP $-2
-0041                  25     TIMER1:
-0041 758C3C           26               MOV TH0,#03CH
-0044 758AB0           27               MOV TL0,#0B0H
-0047 DB04             28               DJNZ R3,T001
-0049 B2D5             29               CPL F0
-004B 7B05             30               MOV R3,#5
-004D                  31               T001:
-004D D53121           32               DJNZ 31H,T0_EX
-0050 753114           33               MOV 31H,#20
-0053 0526             34               INC 26H  
-0055 E526             35               MOV A,26H
-0057 B43C17           36               CJNE A,#60,T0_EX
-005A 752600           37               MOV 26H,#0 
-005D 0527             38               INC 27H
-005F E527             39               MOV A,27H
-0061 B43C0D           40               CJNE A,#60,T0_EX
-0064 752700           41               MOV 27H,#0
-0067 0528             42               INC 28H
-0069 E528             43               MOV A,28H
-006B B41803           44               CJNE A,#24,T0_EX
-006E 752800           45               MOV 28H,#0
-0071 32               46      T0_EX: RETI
-0072                  47      TIMER2:
-0072 758DD8           48                     MOV TH1,#0D8H
-0075 758BF0           49                     MOV TL1,#0F0H
-0078 DA04             50                     DJNZ R2,EX
-007A 7A05             51                     MOV R2,#5
-007C 117F             52                     ACALL KEYPRESS
-007E                  53                     EX:
-007E 32               54                       RETI
-007F                  55                     KEYPRESS:
-007F 309008           56                                     JNB KEY1,K1
-0082 309113           57                                     JNB KEY2,K2
-A51 MACRO ASSEMBLER  MAIN                                                                 07/06/2020 02:22:01 PAGE     2
+  0093                 4     KEY4 EQU P1.3
+0000                   5             ORG 0000H       
+0000 011D              6             AJMP MAIN
+000B                   7         ORG 000BH
+000B 0141              8             AJMP TIMER1
+001B                   9             ORG 01BH
+001B 0172             10             AJMP TIMER2
+001D                  11     MAIN:
+001D 753001           12             MOV 30H,#1
+0020 758911           13             MOV TMOD,#11H
+0023 753114           14             MOV 31H,#20
+0026 7A05             15             MOV R2,#5
+0028 7B05             16             MOV R3,#5
+002A 758C3C           17             MOV TH0,#03CH
+002D 758AB0           18             MOV TL0,#0B0H
+0030 758DD8           19             MOV TH1,#0D8H
+0033 758BF0           20             MOV TL1,#0F0H
+0036 75A88A           21             MOV IE,#8AH
+0039 D28C             22             SETB TR0
+003B D28E             23             SETB TR1
+003D 11E8             24         ACALL DISPLAY
+003F 80FC             25             SJMP $-2
+0041                  26     TIMER1:
+0041 758C3C           27               MOV TH0,#03CH
+0044 758AB0           28               MOV TL0,#0B0H
+0047 DB04             29               DJNZ R3,T001
+0049 B2D5             30               CPL F0
+004B 7B05             31               MOV R3,#5
+004D                  32               T001:
+004D D53121           33               DJNZ 31H,T0_EX
+0050 753114           34               MOV 31H,#20
+0053 0526             35               INC 26H  
+0055 E526             36               MOV A,26H
+0057 B43C17           37               CJNE A,#60,T0_EX
+005A 752600           38               MOV 26H,#0 
+005D 0527             39               INC 27H
+005F E527             40               MOV A,27H
+0061 B43C0D           41               CJNE A,#60,T0_EX
+0064 752700           42               MOV 27H,#0
+0067 0528             43               INC 28H
+0069 E528             44               MOV A,28H
+006B B41803           45               CJNE A,#24,T0_EX
+006E 752800           46               MOV 28H,#0
+0071 32               47      T0_EX: RETI
+0072                  48      TIMER2:
+0072 758DD8           49                     MOV TH1,#0D8H
+0075 758BF0           50                     MOV TL1,#0F0H
+0078 DA04             51                     DJNZ R2,EX
+007A 7A05             52                     MOV R2,#5
+007C 117F             53                     ACALL KEYPRESS
+007E                  54                     EX:
+007E 32               55                       RETI
+007F                  56                     KEYPRESS:
+007F 30900B           57                                     JNB KEY1,K1
+A51 MACRO ASSEMBLER  MAIN                                                                 08/23/2021 23:05:53 PAGE     2
 
-0085 309236           58                                     JNB KEY3,K3
-0088 01E2             59                                     AJMP OUT
-008A                  60                                     K1:
-008A 7A14             61                                             MOV R2,#20
-008C 0530             62                                             INC 30H
-008E E530             63                                             MOV A,30H
-0090 B4044F           64                                             CJNE A,#4,OUT
-0093 753001           65                                             MOV 30H,#1
-0096 01E2             66                                             AJMP OUT
-0098 7B05             67                                             K2: MOV R3,#5
-009A C2D5             68                                                     CLR F0
-009C 7A14             69                                                     MOV R2,#20
-009E E530             70                                                     MOV A,30H
-00A0 C3               71                                                     CLR C
-00A1 B4020C           72                                                     CJNE A,#2,SK1
-00A4 0528             73                                                     INC 28H
-00A6 E528             74                                                     MOV A,28H
-00A8 B41837           75                                                     CJNE A,#24,OUT
-00AB 752800           76                                                     MOV 28H,#0
-00AE 01E2             77                                                     AJMP OUT
-00B0                  78                                                     SK1:
-00B0 4030             79                                                             JC OUT
-00B2 0527             80                                                             INC 27H
-00B4 E527             81                                                             MOV A,27H
-00B6 B43C29           82                                                             CJNE A,#60,OUT
-00B9 752700           83                                                             MOV 27H,#0
-00BC 01E2             84                                                             AJMP OUT
-00BE 7B14             85                                             K3: MOV R3,#20
-00C0 C2D5             86                                                 CLR F0
-00C2 7A14             87                                                     MOV R2,#20
-00C4 E530             88                                                     MOV A,30H
-00C6 C3               89                                                     CLR C
-00C7 B4020C           90                                                     CJNE A,#2,SK2
-00CA 1528             91                                                     DEC 28H
-00CC E528             92                                                     MOV A,28H
-00CE B4FF11           93                                                     CJNE A,#0FFH,OUT
-00D1 752817           94                                                     MOV 28H,#23
-00D4 01E2             95                                                     AJMP OUT
-00D6                  96                                                     SK2:
-00D6 400A             97                                                             JC OUT
-00D8 1527             98                                                             DEC 27H
-00DA E527             99                                                             MOV A,27H
-00DC B4FF03          100                                                             CJNE A,#0FFH,OUT
-00DF 75273B          101                                                             MOV 27H,#59
-00E2                 102                                                             OUT:
-00E2 22              103                                                                     RET                     
-00E3                 104     DISPLAY: 
-00E3 E526            105                 MOV A,26H
-00E5 75F00A          106                 MOV B,#10
-00E8 84              107                 DIV AB
-00E9 85F040          108                 MOV 40H,B  
-00EC F541            109                 MOV 41H,A  
-00EE E530            110                     MOV A,30H
-00F0 30E10E          111                     JNB ACC.1,SK3
-00F3 30E00B          112                     JNB ACC.0,SK3
-00F6 30D508          113                     JNB F0,SK3
-00F9 75430A          114                     MOV 43H,#10
-00FC 75440A          115                     MOV 44H,#10
-00FF 211F            116                     AJMP SK4
-0101                 117                     SK3:
-0101 E527            118                 MOV A,27H
-0103 75F00A          119                 MOV B,#10
-0106 84              120                 DIV AB
-0107 85F043          121                 MOV 43H,B  
-010A F544            122                 MOV 44H,A  
-010C E530            123                     MOV A,30H
-A51 MACRO ASSEMBLER  MAIN                                                                 07/06/2020 02:22:01 PAGE     3
+0082 309116           58                                     JNB KEY2,K2
+0085 309239           59                                     JNB KEY3,K3
+0088 30935C           60                                     JNB KEY4,K4
+008B 01E7             61                                     AJMP OUT
+008D                  62                                     K1:
+008D 7A14             63                                             MOV R2,#20
+008F 0530             64                                             INC 30H
+0091 E530             65                                             MOV A,30H
+0093 B40451           66                                             CJNE A,#4,OUT
+0096 753001           67                                             MOV 30H,#1
+0099 01E7             68                                             AJMP OUT
+009B 7B05             69                                             K2: MOV R3,#5
+009D C2D5             70                                                     CLR F0
+009F 7A14             71                                                     MOV R2,#20
+00A1 E530             72                                                     MOV A,30H
+00A3 C3               73                                                     CLR C
+00A4 B4020C           74                                                     CJNE A,#2,SK1
+00A7 0528             75                                                     INC 28H
+00A9 E528             76                                                     MOV A,28H
+00AB B41839           77                                                     CJNE A,#24,OUT
+00AE 752800           78                                                     MOV 28H,#0
+00B1 8034             79                                                     SJMP OUT
+00B3                  80                                                     SK1:
+00B3 4032             81                                                             JC OUT
+00B5 0527             82                                                             INC 27H
+00B7 E527             83                                                             MOV A,27H
+00B9 B43C2B           84                                                             CJNE A,#60,OUT
+00BC 752700           85                                                             MOV 27H,#0
+00BF 8026             86                                                             SJMP OUT
+00C1 7B14             87                                             K3: MOV R3,#20
+00C3 C2D5             88                                                 CLR F0
+00C5 7A14             89                                                     MOV R2,#20
+00C7 E530             90                                                     MOV A,30H
+00C9 C3               91                                                     CLR C
+00CA B4020C           92                                                     CJNE A,#2,SK2
+00CD 1528             93                                                     DEC 28H
+00CF E528             94                                                     MOV A,28H
+00D1 B4FF13           95                                                     CJNE A,#0FFH,OUT
+00D4 752817           96                                                     MOV 28H,#23
+00D7 01E7             97                                                     AJMP OUT
+00D9                  98                                                     SK2:
+00D9 400C             99                                                             JC OUT
+00DB 1527            100                                                             DEC 27H
+00DD E527            101                                                             MOV A,27H
+00DF B4FF05          102                                                             CJNE A,#0FFH,OUT
+00E2 75273B          103                                                             MOV 27H,#59
+00E5 8000            104                                                             SJMP OUT 
+00E7                 105                                             K4: 
+                     106     
+00E7                 107                                                             OUT:
+00E7 22              108                                                                     RET                     
+00E8                 109     DISPLAY: 
+00E8 E526            110                 MOV A,26H
+00EA 75F00A          111                 MOV B,#10
+00ED 84              112                 DIV AB
+00EE 85F040          113                 MOV 40H,B  
+00F1 F541            114                 MOV 41H,A  
+00F3 E530            115                     MOV A,30H
+00F5 30E10E          116                     JNB ACC.1,SK3
+00F8 30E00B          117                     JNB ACC.0,SK3
+00FB 30D508          118                     JNB F0,SK3
+00FE 75430A          119                     MOV 43H,#10
+0101 75440A          120                     MOV 44H,#10
+0104 2124            121                     AJMP SK4
+0106                 122                     SK3:
+0106 E527            123                 MOV A,27H
+A51 MACRO ASSEMBLER  MAIN                                                                 08/23/2021 23:05:53 PAGE     3
 
-010E 30E10E          124                     JNB ACC.1,SK4
-0111 20E00B          125                     JB ACC.0,SK4
-0114 30D508          126                     JNB F0,SK4
-0117 75460A          127                     MOV 46H,#10
-011A 75470A          128                     MOV 47H,#10
-011D 2130            129                     AJMP SK5
-011F                 130                     SK4:
-011F E528            131                 MOV A,28H
-0121 75F00A          132                 MOV B,#10
-0124 84              133                 DIV AB
-0125 85F046          134                 MOV 46H,B  
-0128 F547            135                 MOV 47H,A   
-012A 75420B          136                     MOV 42H,#11
-012D 75450B          137                     MOV 45H,#11
-0130                 138                     SK5:
-0130 A9FF            139                     MOV R1,0FFH     
-0132 89A0            140                     MOV P2,R1
-0134 7C08            141                     MOV R4,#8
-0136 7840            142                     MOV R0,#40H             
-0138 E6              143        LOOP:MOV A,@R0
-0139 3157            144                     ACALL DSP
-013B F580            145                     MOV P0,A
-013D 314C            146                     ACALL WXM
-013F 08              147                     INC R0
-0140 DCF6            148                     DJNZ R4,LOOP
-0142 22              149              RET
-0143                 150     DELAY: 
-0143 7F02            151          MOV R7,#2
-0145 7E28            152      D1: MOV R6,#40
-0147 DEFE            153              DJNZ R6,$
-0149 DFFA            154              DJNZ R7,D1
-014B 22              155              RET
-014C                 156     WXM:
-014C 89A0            157         MOV P2,R1
-014E 3143            158         ACALL DELAY
-0150 19              159             DEC R1
-0151 758000          160             MOV P0,#00H
-0154 89A0            161             MOV P2,R1
-0156 22              162             RET
-0157                 163     DSP: 
-0157 90015C          164        MOV DPTR,#TAB
-015A 93              165        MOVC A,@A+DPTR
-015B 22              166         RET
-015C                 167     TAB:
-015C 3F065B4F        168             DB 3FH,06H,5BH,4FH,66H
-0160 66                      
-0161 6D7D077F        169             DB 6DH,7DH,07H,7FH,6FH
-0165 6F                      
-0166 0040            170             DB 00H,40H
-                     171                       END
-A51 MACRO ASSEMBLER  MAIN                                                                 07/06/2020 02:22:01 PAGE     4
+0108 75F00A          124                 MOV B,#10
+010B 84              125                 DIV AB
+010C 85F043          126                 MOV 43H,B  
+010F F544            127                 MOV 44H,A  
+0111 E530            128                     MOV A,30H
+0113 30E10E          129                     JNB ACC.1,SK4
+0116 20E00B          130                     JB ACC.0,SK4
+0119 30D508          131                     JNB F0,SK4
+011C 75460A          132                     MOV 46H,#10
+011F 75470A          133                     MOV 47H,#10
+0122 2135            134                     AJMP SK5
+0124                 135                     SK4:
+0124 E528            136                 MOV A,28H
+0126 75F00A          137                 MOV B,#10
+0129 84              138                 DIV AB
+012A 85F046          139                 MOV 46H,B  
+012D F547            140                 MOV 47H,A   
+012F 75420B          141                     MOV 42H,#11
+0132 75450B          142                     MOV 45H,#11
+0135                 143                     SK5:
+0135 A9FF            144                     MOV R1,0FFH     
+0137 89A0            145                     MOV P2,R1
+0139 7C08            146                     MOV R4,#8
+013B 7840            147                     MOV R0,#40H             
+013D E6              148        LOOP:MOV A,@R0
+013E 315C            149                     ACALL DSP
+0140 F580            150                     MOV P0,A
+0142 3151            151                     ACALL WXM
+0144 08              152                     INC R0
+0145 DCF6            153                     DJNZ R4,LOOP
+0147 22              154              RET
+0148                 155     DELAY: 
+0148 7F02            156          MOV R7,#2
+014A 7E28            157      D1: MOV R6,#40
+014C DEFE            158              DJNZ R6,$
+014E DFFA            159              DJNZ R7,D1
+0150 22              160              RET
+0151                 161     WXM:
+0151 89A0            162         MOV P2,R1
+0153 3148            163         ACALL DELAY
+0155 19              164             DEC R1
+0156 758000          165             MOV P0,#00H
+0159 89A0            166             MOV P2,R1
+015B 22              167             RET
+015C                 168     DSP: 
+015C 900161          169        MOV DPTR,#TAB
+015F 93              170        MOVC A,@A+DPTR
+0160 22              171         RET
+0161                 172     TAB:
+0161 3F065B4F        173             DB 3FH,06H,5BH,4FH,66H
+0165 66                      
+0166 6D7D077F        174             DB 6DH,7DH,07H,7FH,6FH
+016A 6F                      
+016B 0040            175             DB 00H,40H
+                     176                     END
+A51 MACRO ASSEMBLER  MAIN                                                                 08/23/2021 23:05:53 PAGE     4
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -195,34 +200,36 @@ N A M E             T Y P E  V A L U E   ATTRIBUTES
 
 ACC. . . . . . . .  D ADDR   00E0H   A   
 B. . . . . . . . .  D ADDR   00F0H   A   
-D1 . . . . . . . .  C ADDR   0145H   A   
-DELAY. . . . . . .  C ADDR   0143H   A   
-DISPLAY. . . . . .  C ADDR   00E3H   A   
-DSP. . . . . . . .  C ADDR   0157H   A   
+D1 . . . . . . . .  C ADDR   014AH   A   
+DELAY. . . . . . .  C ADDR   0148H   A   
+DISPLAY. . . . . .  C ADDR   00E8H   A   
+DSP. . . . . . . .  C ADDR   015CH   A   
 EX . . . . . . . .  C ADDR   007EH   A   
 F0 . . . . . . . .  B ADDR   00D0H.5 A   
 IE . . . . . . . .  D ADDR   00A8H   A   
-K1 . . . . . . . .  C ADDR   008AH   A   
-K2 . . . . . . . .  C ADDR   0098H   A   
-K3 . . . . . . . .  C ADDR   00BEH   A   
+K1 . . . . . . . .  C ADDR   008DH   A   
+K2 . . . . . . . .  C ADDR   009BH   A   
+K3 . . . . . . . .  C ADDR   00C1H   A   
+K4 . . . . . . . .  C ADDR   00E7H   A   
 KEY1 . . . . . . .  B ADDR   0090H.0 A   
 KEY2 . . . . . . .  B ADDR   0090H.1 A   
 KEY3 . . . . . . .  B ADDR   0090H.2 A   
+KEY4 . . . . . . .  B ADDR   0090H.3 A   
 KEYPRESS . . . . .  C ADDR   007FH   A   
-LOOP . . . . . . .  C ADDR   0138H   A   
+LOOP . . . . . . .  C ADDR   013DH   A   
 MAIN . . . . . . .  C ADDR   001DH   A   
-OUT. . . . . . . .  C ADDR   00E2H   A   
+OUT. . . . . . . .  C ADDR   00E7H   A   
 P0 . . . . . . . .  D ADDR   0080H   A   
 P1 . . . . . . . .  D ADDR   0090H   A   
 P2 . . . . . . . .  D ADDR   00A0H   A   
-SK1. . . . . . . .  C ADDR   00B0H   A   
-SK2. . . . . . . .  C ADDR   00D6H   A   
-SK3. . . . . . . .  C ADDR   0101H   A   
-SK4. . . . . . . .  C ADDR   011FH   A   
-SK5. . . . . . . .  C ADDR   0130H   A   
+SK1. . . . . . . .  C ADDR   00B3H   A   
+SK2. . . . . . . .  C ADDR   00D9H   A   
+SK3. . . . . . . .  C ADDR   0106H   A   
+SK4. . . . . . . .  C ADDR   0124H   A   
+SK5. . . . . . . .  C ADDR   0135H   A   
 T001 . . . . . . .  C ADDR   004DH   A   
 T0_EX. . . . . . .  C ADDR   0071H   A   
-TAB. . . . . . . .  C ADDR   015CH   A   
+TAB. . . . . . . .  C ADDR   0161H   A   
 TH0. . . . . . . .  D ADDR   008CH   A   
 TH1. . . . . . . .  D ADDR   008DH   A   
 TIMER1 . . . . . .  C ADDR   0041H   A   
@@ -232,7 +239,7 @@ TL1. . . . . . . .  D ADDR   008BH   A
 TMOD . . . . . . .  D ADDR   0089H   A   
 TR0. . . . . . . .  B ADDR   0088H.4 A   
 TR1. . . . . . . .  B ADDR   0088H.6 A   
-WXM. . . . . . . .  C ADDR   014CH   A   
+WXM. . . . . . . .  C ADDR   0151H   A   
 
 
 REGISTER BANK(S) USED: 0 
